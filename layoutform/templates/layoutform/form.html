@@ -1,0 +1,62 @@
+{% load layoutform %}
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">&times;</a>
+        Please correct the error{{ form.errors|length|pluralize }} below.
+    </div>
+{% endif %}
+{% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">&times;</a>
+        {% for non_field_error in form.non_field_errors %}
+             {{ non_field_error }}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% for field in form.hidden_fields %}
+    {{ field }}
+{% endfor %}
+
+{% if form.field_layout %}
+    {% comment %}
+        This is the magic. 
+        We look for a field_layout definition, which describes how to layout the form's fields. 
+        See: requirement.forms.RequirementModelForm.field_layout
+    {% endcomment %}
+    {% for chunk in form.field_layout %}
+        {% if chunk.type == 'header' %}
+            <h3>{{ chunk.name }}</h3>
+            <p>{{ chunk.description }}</p>
+        {% endif %}
+        {% if chunk.type == 'group_start' %}
+            <div class='well'>
+                <h4>{{ chunk.name }}</h4>
+                <p>{{ chunk.description }}</p>
+        {% endif %}
+        {% if chunk.type == 'group_end' %}
+            </div>
+        {% endif %}
+        {% if chunk.type == 'row' %}
+            <div class='row'>
+                {% for col in chunk.cols %}
+                    {% with form|getfield:col as field %}
+                        {% if field and not field.is_hidden %}
+                            <div class='col-sm-{{ chunk.col_width }}'>
+                                {% include 'bootstrapform/field.html' %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                    {% if chunk.col_limit and forloop.counter|divisibleby:chunk.col_limit %}
+                        </div>
+                        <div class='row'>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% for field in form.visible_fields %}
+        {% include 'bootstrapform/field.html' %}
+    {% endfor %}
+{% endif %}
