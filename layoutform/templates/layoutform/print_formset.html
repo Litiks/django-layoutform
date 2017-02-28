@@ -1,0 +1,12 @@
+{{ formset.management_form }}
+{% load layoutform %}
+
+{% for form in formset|all_extras_hidden %}
+    {% if classes.label == 'sr-only' %}
+        <div class="form-inline">
+            {{ form|print_layout }}
+        </div>
+    {% else %}
+        {{ form|print_layout }}
+    {% endif %}
+{% endfor %}
