@@ -23,6 +23,9 @@ def layout(obj):
     """ Turns out, using templates is a bit slow when you need to do things hundreds of times. 
         So; we generate html code here. Easy peasy.
     """
+    if not obj:
+        return ""
+        
     obj_type = obj.__class__.__name__.lower()
     if obj_type == 'boundfield':
         # template = get_template("bootstrapform/field.html")
@@ -193,6 +196,9 @@ def print_layout(obj):
     """ This method is the same as layout, but it displays a condenced, read-only version of the form.
         Additionally, it checks the form for 'printed_fields', in case there are additional limits applied when printing
     """
+    if not obj:
+        return ""
+        
     obj_type = obj.__class__.__name__.lower()
     if obj_type == 'boundfield':
         # template = get_template("bootstrapform/field.html")
