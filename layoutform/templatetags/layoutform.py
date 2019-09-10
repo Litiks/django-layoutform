@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from builtins import str
 from django.template import Context
 from django.template.loader import get_template
 from django import template
@@ -96,7 +98,7 @@ def layout(obj):
                 field.field.widget.attrs['class'] = field_classes
 
             rows.append(u"<div class='%s'>" % mult_class)
-            rows.append(unicode(field))
+            rows.append(str(field))
 
             for error in field.errors:
                 rows.append(u"<span class='help-block %s'>%s</span>" % (error_css_class, error))
@@ -136,7 +138,7 @@ def layout(obj):
 
         # hidden fields
         for field in form.hidden_fields():
-            rows.append(unicode(field))
+            rows.append(str(field))
 
         try:
             field_layout = getattr(form, 'field_layout', None)()
@@ -269,7 +271,7 @@ def print_layout(obj):
                 field.field.widget.attrs['class'] = field_classes
 
             rows.append(u"<div class='%s'>" % mult_class)
-            rows.append(unicode(field))
+            rows.append(str(field))
             # rows.append(unicode(field.value()))
 
             for error in field.errors:
@@ -310,7 +312,7 @@ def print_layout(obj):
 
         # hidden fields
         for field in form.hidden_fields():
-            rows.append(unicode(field))
+            rows.append(str(field))
 
         try:
             field_layout = getattr(form, 'field_layout', None)()
