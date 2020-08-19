@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 from builtins import str
-from django.template import Context
 from django.template.loader import get_template
 from django import template
 from django.utils.safestring import mark_safe
@@ -30,10 +29,6 @@ def layout(obj):
         
     obj_type = obj.__class__.__name__.lower()
     if obj_type == 'boundfield':
-        # template = get_template("bootstrapform/field.html")
-        # context = Context({'field': obj, 'form': obj.form})
-        # return template.render(context)
-
         field = obj
         form = field.form
         widget = field.field.widget
@@ -114,7 +109,7 @@ def layout(obj):
     elif hasattr(obj, 'management_form'):
         # it's a formset
         template = get_template("layoutform/formset.html")
-        context = Context({'formset': obj})
+        context = {'formset': obj}
         return template.render(context)
 
     else:
@@ -203,10 +198,6 @@ def print_layout(obj):
         
     obj_type = obj.__class__.__name__.lower()
     if obj_type == 'boundfield':
-        # template = get_template("bootstrapform/field.html")
-        # context = Context({'field': obj, 'form': obj.form})
-        # return template.render(context)
-
         field = obj
         form = field.form
         widget = field.field.widget
@@ -288,7 +279,7 @@ def print_layout(obj):
     elif hasattr(obj, 'management_form'):
         # it's a formset
         template = get_template("layoutform/print_formset.html")
-        context = Context({'formset': obj})
+        context = {'formset': obj}
         return template.render(context)
 
     else:
