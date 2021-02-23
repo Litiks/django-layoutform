@@ -1,6 +1,15 @@
 {{ formset.management_form }}
 {% load layoutform %}
 
+{% if formset.non_form_errors %}
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">&times;</a>
+        {% for error in formset.non_form_errors %}
+             {{ error }}
+        {% endfor %}
+    </div>
+{% endif %}
+
 {% for form in formset|extras_hidden %}
     {% if classes.label == 'sr-only' %}
         <div class="form-inline">
