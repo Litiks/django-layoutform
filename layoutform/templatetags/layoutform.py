@@ -236,7 +236,7 @@ def print_layout(obj):
 
             rows.append("<div>")
             for choice in field:
-                rows.append(u"<div class='radio'><label>%s %s</label></div>" % (choice.tag, choice.choice_label))
+                rows.append(u"<div class='radio'><label>%s %s</label></div>" % (choice.tag(), choice.choice_label))
 
             for error in field.errors:
                 rows.append(u"<span class='help-block %s'>%s</span>" % (error_css_class, error))
